@@ -18,7 +18,7 @@ const VotingPage = () => {
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const response = await getQuestions();
+        const response = await getQuestions();console.log("Questions fetched:", response.data);
         setVotingQuestions(response.data);
         
         // Initialize selected images state
@@ -38,10 +38,9 @@ const VotingPage = () => {
     fetchQuestions();
   }, []);
 
-  const handleImageSelect = (questionId, imageId) => {
-    setVotingQuestions(prevQuestions => {
-      const updatedQuestions = [...prevQuestions];
-      const question = updatedQuestions.find(q => q.id === questionId);
+  const handleImageSelect = (questionId, imageId) => {console.log("hdnleImageSelect called");
+   
+      const question = votingQuestions.find(q => q.id === questionId);
       const image = question.images.find(img => img.id === imageId);
       
       if (image) {
@@ -59,11 +58,9 @@ const VotingPage = () => {
             ...prev,
             [questionId]: [...prev[questionId], imageId]
           }));
-        }
+        }console.log(selectedImages[questionId]);
       }
-      
-      return updatedQuestions;
-    });
+
   };
 
   const handleImageClick = (image) => {
